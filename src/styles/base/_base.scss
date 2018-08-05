@@ -1,0 +1,72 @@
+@import "mixins";
+
+:root {
+	// =========== COLORS ============= //
+
+	--color-main: #2ecc71;
+	--color-main-light: #54d98c;
+	--color-main-dark: #25a25a;
+
+	--color-white: #fff;
+	--color-gray-1: #faf9f9;
+	--color-gray-2: #f4f2f2;
+	--color-gray-3: #f0eeee;
+	--color-gray-4: #ccc;
+
+	--color-gray-7: #333;
+	--color-gray-8: #777;
+	--color-gray-9: #999;
+	
+	// ==========FEATURES============ //
+	
+	--shadow-dark: 0 2rem 6rem rgba(0, 0, 0, .3);
+}
+
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+html {
+	box-sizing: border-box;
+	
+	font-size: 62.5%;
+	
+	@include respond(tab-land) {
+		font-size: 54.68%;
+	}
+	
+	@include respond(tab-port) {
+		font-size: 46.87%;
+	}
+	
+	@include respond(big-desktop) {
+		font-size: 70.31%;
+	}
+}
+
+body {
+	font-family: 'Open-sans', sans-serif;
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--color-gray-8);
+	background-image: linear-gradient(to right bottom, var(--color-main-light), var(--color-main-dark));
+	background-size: cover;
+	background-repeat: no-repeat;
+	
+	min-height: 100vh;
+	
+	@include respond(tab-port) {
+		padding: 0;
+	}
+}
+
+::selection {
+	background-color: var(--color-main);
+	color: var(--color-white);
+}
+
+
