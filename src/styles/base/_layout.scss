@@ -9,7 +9,7 @@
 .header {
 	height: 7rem;
 	background-color: var(--color-white);
-	border-bottom: var(--color-gray-2);
+	border-bottom: 1px solid var(--color-gray-2);
 	font-size: 1.4rem;
 	
 	display: flex;
@@ -29,7 +29,24 @@
 .main {
 	background-color: var(--color-white);
 	flex: 1;
-	
-	// TEST
-	height: 80vh;
+}
+
+.detail {
+	font-size: 1.4rem;
+	display: flex;
+	padding: 4.5rem;
+	background-color: var(--color-gray-1);
+	border-bottom: 1px solid var(--color-gray-2);
+}
+
+.description {
+	background-color: var(--color-white);
+	box-shadow: 0 2rem 5rem rgba(0,0,0, .06);
+	padding: 3rem;
+	flex: 0 0 60%;
+	margin-right: 4.5rem;
+}
+
+.labels {
+	flex: 1;
 }
