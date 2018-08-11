@@ -60,6 +60,7 @@
 
 .btn-inline {
 	border: none;
+	text-decoration: none;
 	color: var(--color-main);
 	font-size: inherit;
 	border-bottom: 1px solid currentColor;
@@ -75,7 +76,6 @@
 
 	&:focus {
 		outline: none;
-		animation: pulsate 1s infinite;
 	}
 }
 

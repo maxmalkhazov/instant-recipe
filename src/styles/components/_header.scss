@@ -1,5 +1,5 @@
 .logo {
-	height: 3.25rem;
+	height: 6rem;
 	margin-left: 3rem;
 }
 
@@ -41,6 +41,7 @@
 	&__button {
 		border: none;
 		background-color: var(--color-gray-2);
+		cursor: pointer;
 		
 		&:focus {
 			outline: none;
