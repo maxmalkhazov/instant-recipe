@@ -1,18 +1,35 @@
 import "./styles/styles.scss";
 
-import  { getRecipe } from "./requests";
+import  { getRecipe, getRandom } from "./requests";
 
 const searchBoxSubmit = document.querySelector('.search__button');
 let searchBoxInput = document.querySelector('.search__input');
 
 const overviewHeading = document.querySelector('.overview__heading');
 const recipeSource = document.querySelector('.recipe-source');
+const fullLink = document.querySelector('.source-link__paragraph');
 const recipeTime = document.querySelector('.overview__details-number');
 const recipeImage = document.querySelector('.image__recipe');
 
 const yields = document.querySelector('.overview__yields');
 const ingredientsList = document.querySelector('.list');
+const labelsList = document.querySelector('.label__list');
 
+const searchRecipeButton = document.querySelector('#search-recipe-button');
+const getRandomButton = document.querySelector('#get-random-button');
+
+// GET RANDOM RECIPE
+getRandomButton.addEventListener('click', () => {
+	getRandomButton.classList.add('side-nav__item--active');
+	searchRecipeButton.classList.remove('side-nav__item--active');
+	// renderRandom();
+});
+
+// BACK TO INITIAL STATE
+searchRecipeButton.addEventListener('click', () => {
+	searchRecipeButton.classList.add('side-nav__item--active');
+	getRandomButton.classList.remove('side-nav__item--active');
+})
 
 // ON USER SEARCH INPUT
 searchBoxSubmit.addEventListener('click', () => {
@@ -33,10 +50,16 @@ const renderRecipe = (data) => {
 	} else {
 		overviewHeading.textContent = data.hits[0].recipe.label;
 	}
-	// overviewHeading.textContent = data.hits[0].recipe.label;
 	recipeSource.textContent = data.hits[0].recipe.source;
 	recipeSource.setAttribute('href', data.hits[0].recipe.url);
-	recipeTime.innerText = data.hits[0].recipe.totalTime;
+	fullLink.setAttribute('href', data.hits[0].recipe.url);
+	
+	if (data.hits[0].recipe.totalTime < 1) {
+		recipeTime.innerText = 30;
+	} else {
+		recipeTime.innerText = data.hits[0].recipe.totalTime;
+	}
+	
 	recipeImage.setAttribute('src', data.hits[0].recipe.image);
 	
 	
@@ -57,10 +80,7 @@ const handleIngredients = (data) => {
 		ingredientsList.appendChild(el)
 		
 		el.innerHTML = `<img class="list__item-icon" src="img/chevron-small-right.png"></img>${ingredients[i]}`;
-		
 	}
-	
-	console.log(ingredients);
 }
 
 
@@ -97,17 +117,65 @@ const handleYields = (data) => {
 	}
 }
 
+const handleLabels = (data) => {
+	const healthLabels = data.hits[0].recipe.healthLabels;
+	const calories = Math.round(data.hits[0].recipe.calories);
+	const dietLabels = data.hits[0].recipe.dietLabels;
+	
+	while (labelsList.firstChild) {
+		labelsList.removeChild(labelsList.firstChild);
+	}
+	
+	if (calories > 0) {
+		const el = document.createElement('li');
+		el.classList.add('label__text');
+		labelsList.appendChild(el)
+		
+		el.innerHTML = `<img class="list__item-icon" src="img/chevron-small-right.png"></img>${calories} Calories`;
+	}
+	
+	if (dietLabels.length > 0) {
+		const el = document.createElement('li');
+		el.classList.add('label__text');
+		labelsList.appendChild(el)
+		
+		el.innerHTML = `<img class="list__item-icon" src="img/chevron-small-right.png"></img>${dietLabels[0]}`;
+	}
+	
+	if (healthLabels.length > 0) {
+		for (let i = 0; i < healthLabels.length; i++) {
+			const el = document.createElement('li');
+			el.classList.add('label__text');
+			labelsList.appendChild(el)
+			
+			el.innerHTML = `<img class="list__item-icon" src="img/chevron-small-right.png"></img>${healthLabels[i]}`;
+		}
+	}
+}
+
 const render = async () => {
 	const data = await getRecipe(searchBoxInput.value);
 	searchBoxInput.value = '';
 	renderRecipe(data);
 	handleYields(data);
 	handleIngredients(data);
+	handleLabels(data);
 	
 	
 	console.log(data);
 	
 };
+
+// const renderRandom = async () => {
+// 	const data = await getRandom('http%3A%2F%2Fwww.edamam.com%2Fontologies%2Fedamam.owl%23recipe_9b5945e03f05acbf9d69625138385408');
+// 	renderRecipe(data);
+// 	handleYields(data);
+// 	handleIngredients(data);
+// 	handleLabels(data);
+	
+	
+// 	console.log(data);
+// }
 
 
 
